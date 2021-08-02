@@ -20,11 +20,18 @@ market_close = now.replace(hour=13, minute=0, second=0, microsecond=0, tzinfo=tz
 
 bot = commands.Bot(command_prefix='!')
 
+@bot.event
+async def on_ready():
+    print("The bot is ready!")
+    if datetime_pacific > market_open and datetime_pacific < market_close:
+        print('market open')
+        await bot.get_channel(Secret.signal_channel_id).send("The market is open")
+
 # shows current stocks
 @bot.command(name='show_stocks')
 async def stock(ctx):
-    for ticker in tickers:
-        await ctx.send(ticker)
+    tickers_dataframe = pd.DataFrame({'Tickers' : tickers})
+    await ctx.send(tickers_dataframe.to_string())
 
 # shows current time
 @bot.command(name='show_time')
@@ -62,20 +69,10 @@ async def show_signal():
     signals = pd.DataFrame(data)
     await message_channel.send(signals.to_string())
     # await message_channel.send(data)
-        
-
-    
 
 @show_signal.before_loop
 async def before():
     await bot.wait_until_ready()
-
-@bot.event
-async def on_ready():
-    print("The bot is ready!")
-    if datetime_pacific > market_open and datetime_pacific < market_close:
-        print('market open')
-        await bot.get_channel(Secret.signal_channel_id).send("The market is open")
 
 show_signal.start()
 bot.run(Secret.token)
