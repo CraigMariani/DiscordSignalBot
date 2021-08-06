@@ -51,7 +51,7 @@ async def show_signal():
                 symbol=ticker,
                 screener="america",
                 exchange="NASDAQ",
-                interval=Interval.INTERVAL_1_DAY
+                interval=Interval.INTERVAL_5_MINUTES
             )
 
             # current_ticker = pd.DataFrame.from_dict(current_ticker.get_analysis().moving_averages)
