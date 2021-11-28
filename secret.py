@@ -1,5 +1,6 @@
 
 class Secret:
 
-    token = '' # discord bot token
-    signal_channel_id = None # channel id for server the bot will be talking to
+    token = 'OTE0MzExOTgyOTUyMzU3OTI4.YaLNYw.nTUs-BhZFOqByKfXt3tItctcs-Q'
+    signal_channel_id =914311982952357928
+    
